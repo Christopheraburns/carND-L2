@@ -19,9 +19,9 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization1.png "Visualization"
+[image1]: ./examples/Visualization1.png "Visualization"
 [image2]: ./examples/Normalized.png "Normalized"
-[image3]: ./examples/training-v-accuracy "Training-v-accuracy"
+[image3]: ./examples/training-v-accuracy.png "Training-v-accuracy"
 [image4]: ./examples/40.png "Traffic Sign 1"
 [image5]: ./examples/3.png "Traffic Sign 2"
 [image6]: ./examples/33.png "Traffic Sign 3"
