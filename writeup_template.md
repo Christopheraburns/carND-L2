@@ -21,7 +21,7 @@ The goals / steps of this project are the following:
 
 [image1]: ./examples/Visualization1.png "Visualization"
 [image2]: ./examples/Normalized.png "Normalized"
-[image3]: ./examples/training-v-accuracy.png "Training-v-accuracy"
+[image3]: ./examples/trainingaccuracy.png "Training-v-accuracy"
 [image4]: ./examples/40.png "Traffic Sign 1"
 [image5]: ./examples/3.png "Traffic Sign 2"
 [image6]: ./examples/33.png "Traffic Sign 3"
@@ -69,11 +69,19 @@ I began by shuffling the data sets
 
 I then used the OpenCV Library to:
 * Convert the image to Grayscale (cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	I did this to:
+		 * Reduce the image to a single color channel for performance reasons
+		 * A single color channel would make for easier contrast/brightness changes
+
 * Equalize the image histogram (cv2.equalizeHist(image))
+	I did this to:
+		 * Some images were very dark and the contrast had to be increased or reduced to pull out the sign from the background
 
 I then uses the Numpy library to:
 * reshape each image (np.array) to 32,32,1 
+		 * Something in the cv2.COLOR_BGR2GRAY function was not changing the shape of the data to 32,32,1.  This step forced a reshaping of the data to 32, 32, 1
 * Normalize each image
+		 * Once the images where equalized to highlight the contrast, some images had too much contrast.  The normalization step helped to soften the images with too much contrast that may confuse the CNN
 
 Finally, I output the following data
 * The standard deviation after normalization (usually consistent to within 5 thousandths)
@@ -160,18 +168,22 @@ The first image might be difficult to classify because ...
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
+My first images from the different where different than the five that were ultimately submitted.  I had predicted that by cropping out as much background as possible it would be helpful to the LeNet function to identify the components of each image.  That was NOT the case.  When I tested new images - some with a bit of background.  The accuracy increased. I am suspected that a bit of background noise allowed the LeNet function to better interpret the base components for the traffic signs.  For some reason, whichever image was the first in the list was ALWAYS missed.  I would like to learn more about this and why that was the case.  If the same image was first in a list of 5 images it was NOT recognized.  When I moved the image to spots 2-5 it WAS recognized.
+
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Roundabout mandatory  | Priority Road   								| 
-| 60 km     			| 60 km 										|
-| Right Turn ahead		| Right turn ahead								|
-| No entry	      		| No entry					 					|
-| Children Crossing		| Children Crossing     						|
+| Roundabout mandatory  | Priority Road   	(MISS)						| 
+| 60 km     			| 60 km 			(CORRECT)					|
+| Right Turn ahead		| Right turn ahead	(CORRECT)					|
+| No entry	      		| No entry			(CORRECT)		 			|
+| Children Crossing		| Children Crossing (CORRECT)    				|
 
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. 
+80% is a very low quality number but the dataset is only 5 images.  If the dataset where 10K, 20k or even 30k then the accuracy would very likely be on par with the original validation set supplied with the lesson - 93%.
+
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
